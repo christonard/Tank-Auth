@@ -104,7 +104,7 @@ class Auth extends CI_Controller
 	function logout()
 	{
 		$this->tank_auth->logout();
-
+		$this->session->sess_create();
 		$this->_show_message($this->lang->line('auth_message_logged_out'));
 	}
 
@@ -242,6 +242,7 @@ class Auth extends CI_Controller
 		// Activate user
 		if ($this->tank_auth->activate_user($user_id, $new_email_key)) {		// success
 			$this->tank_auth->logout();
+			$this->session->sess_create();
 			$this->_show_message($this->lang->line('auth_message_activation_completed').' '.anchor('/auth/login/', 'Login'));
 
 		} else {																// fail
@@ -416,6 +417,7 @@ class Auth extends CI_Controller
 		// Reset email
 		if ($this->tank_auth->activate_new_email($user_id, $new_email_key)) {	// success
 			$this->tank_auth->logout();
+			$this->session->sess_create();
 			$this->_show_message($this->lang->line('auth_message_new_email_activated').' '.anchor('/auth/login/', 'Login'));
 
 		} else {																// fail
